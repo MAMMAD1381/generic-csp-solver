@@ -39,6 +39,11 @@ class Solver:
 
     def backtracking(self):
         start_time = time.time()
+        if self.is_finished():
+            return self.problem.variables
+        min_var = self.mrv()
+        for d in min_var.domain:
+            min_var.value = d
 
 
         print(time.time() - start_time)
@@ -79,6 +84,20 @@ class Solver:
 
 
     def lcv(self, var: Variable):
-        pass
+        Max = -1
+        v = None
+        for d in var.domain:
+            for constraint in self.problem.constraints:
+                if var in constraint.variables:
+                    sum = 0
+                    for variable in constraint.variables:
+                        if d in variable.domain:
+                            sum += len(variable.domain) - 1
+                        else:
+                            sum += len(variable.domain)
+                    if sum > Max:
+                        Max = sum
+                        v = d
+        return v
         # Write your code here
 
