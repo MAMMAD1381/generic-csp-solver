@@ -74,6 +74,14 @@ class Solver:
         return var.domain
 
     def mrv(self) -> Optional[Variable]:
+        Min = 9999
+        var = None
+        for variable in self.problem.get_unassigned_variables():
+            if len(variable.domain) < Min:
+                Min = len(variable.domain)
+                var = variable
+
+        return var
 
         pass
         # Write your code here
