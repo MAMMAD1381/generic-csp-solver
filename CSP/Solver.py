@@ -38,11 +38,23 @@ class Solver:
 
 
     def backtracking(self):
+        start_time = time.time()
+
+
+        print(time.time() - start_time)
         pass
         # Write your code here
 
-    def forward_check(self, var):
-        pass
+    def forward_check(self, var) -> bool:
+        for constraint in self.problem.constraints:
+            if var in constraint.variables:
+                for variable in constraint.variables:
+                    if var in variable.domain:
+                        variable.domain.pop(variable.domain.index(var))
+        for variable in self.problem.variables:
+            if len(variable.domain) == 0:
+                return False
+        return True
         # Write your code here
 
     def select_unassigned_variable(self) -> Optional[Variable]:
@@ -57,6 +69,7 @@ class Solver:
         return var.domain
 
     def mrv(self) -> Optional[Variable]:
+
         pass
         # Write your code here
 
@@ -68,5 +81,4 @@ class Solver:
     def lcv(self, var: Variable):
         pass
         # Write your code here
-
 
