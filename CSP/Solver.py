@@ -45,10 +45,14 @@ class Solver:
         for d in min_var.domain:
             min_var.value = d
 
+            if self.is_consistent(min_var):
+                result= self.backtracking()
+                if result:
+                    return result
+        min_var.value=None
 
-        print(time.time() - start_time)
-        pass
-        # Write your code here
+        return
+
 
     def forward_check(self, var) -> bool:
         for constraint in self.problem.constraints:
@@ -86,8 +90,13 @@ class Solver:
         pass
         # Write your code here
 
-    def is_consistent(self, var: Variable):
-        pass
+    def is_consistent(self, var: Variable) ->bool:
+        for constraint in self.problem.constraints:
+            if var in constraint.variables:
+                if not constraint.is_satisfied():
+
+                    return False
+        return True
         # Write your code here
 
 
