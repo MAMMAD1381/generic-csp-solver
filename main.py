@@ -2,6 +2,7 @@ from CSP.Solver import Solver
 from SecretSanta.SecretSantaProblem import SecretSantaProblem
 from States.StatesProblem import StatesProblem
 from Sudoku.SudokuProblem import SudokuProblem
+from king.KingProblem import KingProblem
 
 
 states = StatesProblem()
@@ -65,3 +66,8 @@ sudoku = SudokuProblem(grid2)
 s = Solver(sudoku, use_mrv= True, use_forward_check=True)
 s.solve()
 sudoku.print_assignments()
+
+kings = KingProblem()
+s = Solver(kings, use_forward_check=True)
+s.solve()
+kings.print_assignments()

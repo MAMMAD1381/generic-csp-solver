@@ -3,35 +3,31 @@ from typing import List
 
 from CSP.Problem import Problem
 from CSP.Variable import Variable
-from States.StatesConstraint import StatesNotSameConstraint
+from king.KingConstraint import PotionNotSameConstraint
 
 
-class StatesProblem(Problem):
+class KingProblem(Problem):
 
     def __init__(self):
-        super().__init__([], [], "States Problem")
+        super().__init__([], [], "King Problem")
 
-        wa = Variable[str](['R', 'G', 'B'], 'WA')
-        nt = Variable[str](['R', 'G', 'B'], 'NT')
-        sa = Variable[str](['R', 'G', 'B'], 'SA')
-        q = Variable[str](['R', 'G', 'B'], 'Q')
-        nsw = Variable[str](['R', 'G', 'B'], 'NSW')
-        v = Variable[str](['R', 'G', 'B'], 'V')
-        t = Variable[str](['R', 'G', 'B'], 'T')
+        al = Variable[str]([['trans', 'blue'], ['trans', 'black'], ['trans', 'purple']], 'aldo')
+        bt = Variable[str]([['trans', 'blue'], ['poison', 'blue'], ['invisible', 'blue'], ['heal', 'blue']], 'beatrice')
+        ig = Variable[str]([['poison', 'blue'], ['poison', 'green'], ['poison', 'red']], 'ignatius')
+        lo = Variable[str]([['invisible', 'green'], ['trans', 'green'], ['heal', 'green'], ['acid', 'green']], 'lorenzo')
+        os = Variable[str]([['invisible', 'green'], ['invisible', 'red'], ['invisible', 'purple']], 'orsola')
 
-        c1 = StatesNotSameConstraint([wa, nt])
-        c2 = StatesNotSameConstraint([wa, sa])
+        c1 = PotionNotSameConstraint([al, bt])
+        c2 = PotionNotSameConstraint([al, ig])
+        c3 = PotionNotSameConstraint([al, lo])
+        c4 = PotionNotSameConstraint([al, os])
+        c5 = PotionNotSameConstraint([bt, ig])
+        c6 = PotionNotSameConstraint([bt, lo])
+        c7 = PotionNotSameConstraint([bt, os])
+        c8 = PotionNotSameConstraint([ig, lo])
+        c9 = PotionNotSameConstraint([ig, os])
+        c10 = PotionNotSameConstraint([lo, os])
 
-        c3 = StatesNotSameConstraint([nt, q])
-        c4 = StatesNotSameConstraint([nt, sa])
+        self.constraints = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10]
 
-        c5 = StatesNotSameConstraint([sa, q])
-        c6 = StatesNotSameConstraint([sa, nsw])
-        c7 = StatesNotSameConstraint([sa, v])
-
-        c8 = StatesNotSameConstraint([q, nsw])
-
-        c9 = StatesNotSameConstraint([v, nsw])
-
-        self.constraints = [c1, c2, c3, c4, c5, c6, c7, c8, c9]
-        self.variables = [wa, nt, sa, q, nsw, v, t]
+        self.variables = [al, bt, ig, lo, os]
